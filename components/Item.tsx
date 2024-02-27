@@ -8,17 +8,22 @@ import { ShouldRender } from "@/components";
 interface Props {
   value: ItemType;
   isCheckout?: boolean;
+  onDeleteHandle?: (id: string) => void;
 }
 
-export const Item: FC<Props> = ({ value: item, isCheckout }) => {
+export const Item: FC<Props> = ({
+  value: item,
+  isCheckout,
+  onDeleteHandle,
+}) => {
   const { addSelectedItem } = useItemsContext();
   const { id, name, price, img } = item;
+  const imageUrl = img?.includes("http") ? img : `${API_URL}/${img}`;
 
   const addToCart = () => {
     addSelectedItem(item);
   };
 
-  const imageUrl = img?.includes("http") ? img : `${API_URL}/${img}`;
   return (
     <>
       <div className="flex my-5 gap-5 bg-slate-700 p-5 w-[95%] mx-auto">
@@ -40,7 +45,10 @@ export const Item: FC<Props> = ({ value: item, isCheckout }) => {
               <button className="bg-black text-white round-sm p-2 rounded-lg">
                 Edit
               </button>
-              <button className="bg-black text-white round-sm p-2 rounded-lg">
+              <button
+                onClick={() => onDeleteHandle?.(id)}
+                className="bg-black text-white round-sm p-2 rounded-lg"
+              >
                 Delete
               </button>
             </div>

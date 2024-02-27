@@ -23,3 +23,15 @@ export const postItem = async (item: Omit<ItemType, "id">) => {
 
   return await response.json();
 };
+
+export const deleteItem = async (id: string) => {
+  const response = await fetch(`${API_URL}/items/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error(ERROR_MSG);
+  }
+
+  return response;
+};
