@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { deleteItem, getItems } from "@/services/items";
 import { Item } from "@/components";
 import { ItemType } from "@/types/item";
+import { debounce } from "@/utils/debounce";
 
 export const ViewItems = () => {
   const [allItems, setAllItems] = useState<ItemType[]>([]);
@@ -32,9 +33,12 @@ export const ViewItems = () => {
     }
   };
 
-  const onFilter = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
+    debouncedFilter(value);
+  };
 
+  const debouncedFilter = debounce((value: string) => {
     if (!value) {
       setFilteredItems([...allItems]);
       return;
@@ -45,7 +49,7 @@ export const ViewItems = () => {
     );
 
     setFilteredItems(newFilteredItems);
-  };
+  }, 500);
 
   useEffect(() => {
     fetchAllItems();
@@ -58,7 +62,7 @@ export const ViewItems = () => {
         <input
           className="block w-full  text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none"
           type="text"
-          onChange={onFilter}
+          onChange={onChangeHandle}
           ref={inputRef}
         />
       </div>
