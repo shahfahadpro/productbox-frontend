@@ -6,7 +6,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <ItemsProvider>
-        <Component {...pageProps} />;
+        <Component {...pageProps} />
       </ItemsProvider>
     </>
   );
