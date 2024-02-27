@@ -18,16 +18,12 @@ export const Item: FC<Props> = ({ value: item, isCheckout }) => {
     addSelectedItem(item);
   };
 
+  const imageUrl = img?.includes("http") ? img : `${API_URL}/${img}`;
   return (
     <>
       <div className="flex my-5 gap-5 bg-slate-700 p-5 w-[95%] mx-auto">
         <div>
-          <Image
-            src={`${API_URL}/${img}`}
-            width={200}
-            height={200}
-            alt="product image"
-          />
+          <Image src={imageUrl} width={200} height={200} alt="product image" />
         </div>
         <div>
           <p className="text-white">id: {id}</p>
